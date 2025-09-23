@@ -1,0 +1,29 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Список Рассылок</h1>
+</div>
+<div class="card mb-4 box-shadow">
+    {% for mailing in mailings %}
+    <div class="card-group">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ mailing.id }}</h5>
+                <p class="card-text">{{ mailing.status }}</p>
+                <p class="card-text">{{ mailing.message }}</p>
+                <p class="card-text">{{ mailing.recipient }}</p>
+                <p class="card-text">{{ mailing.start_datetime }}</p>
+                <a href="{% url 'mailing_service:mailing_detail' mailing.pk %}" class="btn btn-primary">Посмотреть</a>
+                <a href="{% url 'mailing_service:mailing_send' mailing.pk %}" class="btn btn-secondary">Отправить</a>
+                {% if user.is_manager %}
+                <form method="post" action="{% url 'mailing_service:disable_mailing' mailing.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning btn-sm">Отключить</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

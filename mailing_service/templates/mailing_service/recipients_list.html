@@ -1,0 +1,20 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Список получателей рассылки</h1>
+</div>
+<div class="card mb-4 box-shadow">
+    {% for recipient in recipients %}
+    <div class="card-group">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipient.email }}</h5>
+                <p class="card-text">{{ recipient.full_name }}</p>
+                <p class="card-text">{{ recipient.comment }}</p>
+                <a href="{% url 'mailing_service:recipient_detail' recipient.pk %}" class="btn btn-primary">Посмотреть</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

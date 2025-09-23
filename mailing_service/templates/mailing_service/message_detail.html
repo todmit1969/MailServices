@@ -1,0 +1,14 @@
+{% extends 'mailing_service/base.html' %}
+{% block title %}Детали Сообщения{% endblock %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Детали сообщения</h1>
+</div>
+<div class="container mt-5">
+    <h2>Тема: {{ message.subject }}</h2>
+    <p>Соообщение: {{ message.letter }}</p>
+    <a href="{% url 'mailing_service:messages_list' %}" class="btn btn-primary">Вернуться к списку</a>
+    <a href="{% url 'mailing_service:message_update' message.pk %}" class="btn btn-secondary">Редактировать</a>
+    <a href="{% url 'mailing_service:message_delete' message.pk %}" class="btn btn-danger">Удалить</a>
+</div>
+{% endblock %}

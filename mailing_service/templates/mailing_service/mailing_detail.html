@@ -1,0 +1,24 @@
+{% extends 'mailing_service/base.html' %}
+{% block title %}Детали Рассылки{% endblock %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Детали Рассылки</h1>
+</div>
+<div class="container mt-5">
+    <h2>ID: {{ mailing.id }}</h2>
+    <p>Соообщение: {{ mailing.message }}</p>
+    <p>Кому: {{ mailing.recipient }}</p>
+    <p>Дата создания: {{ mailing.start_datetime }}</p>
+    <h3>Попытки отправки рассылки {{ mailing.id }}</h3>
+    <ul>
+        {% for attempt in mailing.send_attempts.all %}
+        <li>{{ attempt.attempt_datetime }} — {{ attempt.status }} — {{ attempt.server_response }}</li>
+        {% empty %}
+        <li>Нет попыток отправки</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'mailing_service:mailings_list' %}" class="btn btn-primary">Вернуться к списку</a>
+    <a href="{% url 'mailing_service:mailing_update' mailing.pk %}" class="btn btn-secondary">Редактировать</a>
+    <a href="{% url 'mailing_service:mailing_delete' mailing.pk %}" class="btn btn-danger">Удалить</a>
+</div>
+{% endblock %}

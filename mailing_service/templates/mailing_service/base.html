@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<title>{% block title %} Mailing Service {% endblock %}</title>
+{% include 'mailing_service/header.html' %}
+<body>
+{% block content %}
+<h1>Статистика рассылок</h1>
+
+<ul>
+    <li>Общее количество рассылок: {{ total_mailings }}</li>
+    <li>Активные рассылки (Запущена): {{ active_mailings }}</li>
+    <li>Уникальных получателей: {{ unique_recipients }}</li>
+</ul>
+{% endblock %}
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+{% include 'mailing_service/footer.html' %}
+</html>

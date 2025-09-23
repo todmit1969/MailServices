@@ -1,0 +1,15 @@
+{% extends 'mailing_service/base.html' %}
+{% block title %}Детали получателя{% endblock %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Детали получателя</h1>
+</div>
+<div class="container mt-5">
+    <h2>{{ recipient.full_name }}</h2>
+    <p>Email: {{ recipient.email }}</p>
+    <p>Комментарий: {{ recipient.comment }}</p>
+    <a href="{% url 'mailing_service:recipients_list' %}" class="btn btn-primary">Вернуться к списку</a>
+    <a href="{% url 'mailing_service:recipient_update' recipient.pk %}" class="btn btn-secondary">Редактировать</a>
+    <a href="{% url 'mailing_service:recipient_delete' recipient.pk %}" class="btn btn-danger">Удалить</a>
+</div>
+{% endblock %}

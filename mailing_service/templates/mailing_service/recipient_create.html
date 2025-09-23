@@ -1,0 +1,10 @@
+{% extends 'mailing_service/base.html' %}
+{% block title %}Create recipient{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Создать</button>
+    <a href="{% url 'mailing_service:recipients_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}
