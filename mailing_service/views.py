@@ -15,7 +15,7 @@ from .models import Recipient, Message, Mailing, SendAttempt
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class HomePageView(LoginRequiredMixin, TemplateView):
-    template_name = 'mailing_service/base.html'
+    template_name = 'base.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -34,75 +34,75 @@ class HomePageView(LoginRequiredMixin, TemplateView):
 class RecipientCreateView(LoginRequiredMixin, CreateView):
     model = Recipient
     form_class = RecipientForm
-    template_name = 'mailing_service/recipient_create.html'
+    template_name = 'recipient_create.html'
     success_url = reverse_lazy('mailing_service:recipients_list')
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class RecipientDetailView(DetailView):
     model = Recipient
-    template_name = 'mailing_service/recipient_detail.html'
+    template_name = 'recipient_detail.html'
     context_object_name = 'recipient'
 
 
 class RecipientUpdateView(UpdateView):
     model = Recipient
     form_class = RecipientForm
-    template_name = 'mailing_service/recipient_create.html'
+    template_name = 'recipient_create.html'
     success_url = reverse_lazy('mailing_service:recipients_list')
 
 
 class RecipientDeleteView(DeleteView):
     model = Recipient
-    template_name = 'mailing_service/recipient_delete.html'
+    template_name = 'recipient_delete.html'
     success_url = reverse_lazy('mailing_service:recipients_list')
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class RecipientListView(ListView):
     model = Recipient
-    template_name = 'mailing_service/recipients_list.html'
+    template_name = 'recipients_list.html'
     context_object_name = 'recipients'
 
 
 class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
-    template_name = 'mailing_service/message_create.html'
+    template_name = 'message_create.html'
     success_url = reverse_lazy('mailing_service:messages_list')
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MessageDetailView(DetailView):
     model = Message
-    template_name = 'mailing_service/message_detail.html'
+    template_name = 'message_detail.html'
     context_object_name = 'message'
 
 
 class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
-    template_name = 'mailing_service/message_create.html'
+    template_name = 'message_create.html'
     success_url = reverse_lazy('mailing_service:messages_list')
 
 
 class MessageDeleteView(DeleteView):
     model = Message
-    template_name = 'mailing_service/message_delete.html'
+    template_name = 'message_delete.html'
     success_url = reverse_lazy('mailing_service:messages_list')
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = 'mailing_service/messages_list.html'
+    template_name = 'messages_list.html'
     context_object_name = 'messages'
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
-    template_name = 'mailing_service/mailings_list.html'
+    template_name = 'mailings_list.html'
     context_object_name = 'mailings'
 
     def get_queryset(self):
@@ -120,7 +120,7 @@ class MailingListView(LoginRequiredMixin, ListView):
 class MailingCreateView(CreateView):
     model = Mailing
     form_class = MailingForm
-    template_name = 'mailing_service/mailing_create.html'
+    template_name = 'mailing_create.html'
     success_url = reverse_lazy('mailing_service:mailings_list')
 
     def form_valid(self, form):
@@ -132,7 +132,7 @@ class MailingCreateView(CreateView):
 class MailingUpdateView(UpdateView):
     model = Mailing
     form_class = MailingForm
-    template_name = 'mailing_service/mailing_create.html'
+    template_name = 'mailing_create.html'
     success_url = reverse_lazy('mailing_service:mailings_list')
 
     def form_valid(self, form):
@@ -151,14 +151,14 @@ class MailingUpdateView(UpdateView):
 
 class MailingDeleteView(DeleteView):
     model = Mailing
-    template_name = 'mailing_service/mailing_delete.html'
+    template_name = 'mailing_delete.html'
     success_url = reverse_lazy('mailing_service:mailings_list')
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MailingDetailView(DetailView):
     model = Mailing
-    template_name = 'mailing_service/mailing_detail.html'
+    template_name = 'mailing_detail.html'
     context_object_name = 'message'
 
 

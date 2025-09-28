@@ -146,3 +146,7 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379/1',
     }
 }
+
+LOGIN_REDIRECT_URL = "mailing_service:mailings_list"
+LOGOUT_REDIRECT_URL = "mailing_service:mailings_list"
+LOGIN_URL = "users:login"
