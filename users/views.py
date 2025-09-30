@@ -64,6 +64,7 @@ class UsersListView(ListView):
 
 
 class UserLogout(LogoutView):
+    template_name = 'users/logout.html'
     next_page = reverse_lazy('users:logout')
 
 

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from dotenv import load_dotenv
-
 from pathlib import Path
 
 load_dotenv(override=True)
@@ -147,6 +146,6 @@ CACHES = {
     }
 }
 
-LOGIN_REDIRECT_URL = "mailing_service:mailings_list"
-LOGOUT_REDIRECT_URL = "mailing_service:mailings_list"
+LOGIN_REDIRECT_URL = "mailing_service:home"
+LOGOUT_REDIRECT_URL = "users:logout"
 LOGIN_URL = "users:login"
