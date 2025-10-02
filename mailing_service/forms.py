@@ -59,8 +59,8 @@ class RecipientForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if not email.endswith('@example.com'):
-            raise ValidationError('email должен оканчиваться на @example.com')
+        if not email:
+            raise ValidationError('email надо указать!')
         return email
 
 

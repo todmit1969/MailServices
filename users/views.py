@@ -11,6 +11,7 @@ from django.contrib.auth import login, get_user_model
 from django.core.signing import TimestampSigner, BadSignature, SignatureExpired
 
 from .models import CustomUser
+import os
 
 signer = TimestampSigner()
 
@@ -35,7 +36,7 @@ class UserRegisterView(FormView):
         )
         subject = 'Подтверждение регистрации'
         message = f'Перейдите по ссылке для подтверждения регистрации: {confirm_url}'
-        from_email = 'mydjangoproject@yandex.ru'
+        from_email = os.getenv("EMAIL_HOST_USER")
         recipient_list = [user.email]
         send_mail(subject, message, from_email, recipient_list)
 

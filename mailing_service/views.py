@@ -14,20 +14,20 @@ from .models import Recipient, Message, Mailing, SendAttempt
 
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
-class HomePageView(LoginRequiredMixin, TemplateView):
+class HomePageView(TemplateView):
     template_name = 'mailing_service/base.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
+        #user = self.request.user
 
-        mailings = Mailing.objects.filter(owner=user)
+        #mailings = Mailing.objects.filter(owner=user)
 
-        context['total_mailings'] = Mailing.objects.count()
+        #context['total_mailings'] = Mailing.objects.count()
         context['active_mailings'] = Mailing.objects.filter(status='Запущена').count()
         context['unique_recipients'] = Recipient.objects.count()
-        context['success_attempts'] = SendAttempt.objects.filter(mailing__in=mailings, status='Успешно').count()
-        context['failed_attempts'] = SendAttempt.objects.filter(mailing__in=mailings, status='Не успешно').count()
+        #context['success_attempts'] = SendAttempt.objects.filter(mailing__in=mailings, status='Успешно').count()
+        #context['failed_attempts'] = SendAttempt.objects.filter(mailing__in=mailings, status='Не успешно').count()
         return context
 
 
@@ -71,6 +71,9 @@ class MessageCreateView(CreateView):
     template_name = 'mailing_service/message_create.html'
     success_url = reverse_lazy('mailing_service:messages_list')
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MessageDetailView(DetailView):
@@ -124,6 +127,7 @@ class MailingCreateView(CreateView):
     success_url = reverse_lazy('mailing_service:mailings_list')
 
     def form_valid(self, form):
+        form.instance.owner = self.request.user
         response = super().form_valid(form)
         self.object.update_status()
         return response
