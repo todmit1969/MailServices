@@ -8,6 +8,13 @@ class Recipient(models.Model):
     email = models.EmailField(unique=True, max_length=100)
     full_name = models.CharField(max_length=100)
     comment = models.TextField(blank=True, null=True)
+    owner = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец",
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.full_name
@@ -21,7 +28,7 @@ class Recipient(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=100, blank=True)
     letter = models.TextField()
-    owner = models.ForeignKey(CustomUser, verbose_name='владелец рассылки',
+    owner = models.ForeignKey(CustomUser, verbose_name='владелец сообщения',
                               blank=True, null=True,
                               on_delete=models.SET_NULL)
 

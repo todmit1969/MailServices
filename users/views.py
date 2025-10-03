@@ -79,7 +79,7 @@ class BlockUserView(LoginRequiredMixin, UserPassesTestMixin, View):
     def post(self, request, *args, **kwargs):
         user_to_block = get_object_or_404(User, pk=kwargs['pk'])
         if user_to_block.is_superuser or user_to_block == request.user:
-            return redirect('users:user_list')
+            return redirect('users:users_list')
 
         user_to_block.is_active = False
         user_to_block.save()
@@ -95,4 +95,4 @@ class DisableMailingView(LoginRequiredMixin, UserPassesTestMixin, View):
         mailing = get_object_or_404(Mailing, pk=kwargs['pk'])
         mailing.status = 'Завершена'
         mailing.save()
-        return redirect('mailing:mailing_list')
+        return redirect('mailing:mailings_list')
