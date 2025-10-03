@@ -21,6 +21,9 @@ class Recipient(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=100, blank=True)
     letter = models.TextField()
+    owner = models.ForeignKey(CustomUser, verbose_name='владелец рассылки',
+                              blank=True, null=True,
+                              on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.subject

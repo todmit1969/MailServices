@@ -18,8 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from mailing_service.views import HomePageView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mailing_service/', include(('mailing_service.urls', 'mailing_service'), namespace='mailing_service')),
+    path('', include(('mailing_service.urls', 'mailing_service'), namespace='mailing_service')),
     path('users/', include(('users.urls', 'users'), namespace='users')),
 ]

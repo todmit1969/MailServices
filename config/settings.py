@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from dotenv import load_dotenv
-
 from pathlib import Path
 
 load_dotenv(override=True)
@@ -146,3 +145,7 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379/1',
     }
 }
+
+LOGIN_REDIRECT_URL = "mailing_service:home"
+LOGOUT_REDIRECT_URL = "users:logout"
+LOGIN_URL = "users:login"
