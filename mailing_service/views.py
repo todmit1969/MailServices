@@ -8,6 +8,7 @@ from django.views import View
 from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth import get_user
 
 from .forms import MailingForm, RecipientForm, MessageForm
 from .models import Recipient, Message, Mailing, SendAttempt
@@ -37,6 +38,11 @@ class RecipientCreateView(LoginRequiredMixin, CreateView):
     template_name = 'mailing_service/recipient_create.html'
     success_url = reverse_lazy('mailing_service:recipients_list')
 
+    def form_valid(self, form):
+        user = get_user(self.request)
+        form.instance.owner = user
+        form.instance.save()
+        return super().form_valid(form)
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class RecipientDetailView(DetailView):
@@ -64,6 +70,14 @@ class RecipientListView(ListView):
     template_name = 'mailing_service/recipients_list.html'
     context_object_name = 'recipients'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        if user.is_manager:
+            context["object_list"] = Recipient.objects.all()
+        else:
+            context["object_list"] = Recipient.objects.filter(owner=user)
+        return context
 
 class MessageCreateView(CreateView):
     model = Message
@@ -108,9 +122,6 @@ class MessageListView(LoginRequiredMixin, ListView):
         else:
             queryset = Message.objects.filter(owner=user)
 
-        for message in queryset:
-            message.update_status()
-        return queryset
 
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class MailingListView(LoginRequiredMixin, ListView):
@@ -173,7 +184,7 @@ class MailingDeleteView(DeleteView):
 class MailingDetailView(DetailView):
     model = Mailing
     template_name = 'mailing_service/mailing_detail.html'
-    context_object_name = 'message'
+    context_object_name = 'mailing'
 
 
 class MailingSendView(View):
